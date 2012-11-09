@@ -29,7 +29,7 @@ public class ReadGlove implements com.idrt.GloveHandshapeListener {
 	public ReadGlove() {
 		
 		//intialize lookup table with Arabic letters and their
-		//mapped output membership of the fuzzy system
+		//mapped output membership of the fuzzy system.
 		initializeFuzzyDict();	
 		
 	}//end ReadGlove
