@@ -148,7 +148,7 @@ public class ReadGlove implements com.idrt.GloveHandshapeListener {
 		wordQueue.push(fuzzyDict.get(fuzzyDict.floorKey(fuzzyOutput)));
 		System.out.println(fuzzyDict.get(fuzzyDict.floorKey(fuzzyOutput)));
 		return;
-	}//end FuzzyRun
+	}//end FuzzyRun.
 	
 	public void initializeFuzzyDict(){
 		
