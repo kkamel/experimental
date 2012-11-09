@@ -1,0 +1,221 @@
+
+// Block definition (there may be more than one block per file)
+FUNCTION_BLOCK tipper
+
+// Define input variables
+VAR_INPUT
+    Wy : REAL;(* RANGE(0 ..255) *)
+    Tx : REAL;(* RANGE(0 ..255) *)
+    Ty : REAL;(* RANGE(0 ..255) *)
+    Iy : REAL;(* RANGE(0 ..255) *)
+    My : REAL;(* RANGE(0 ..255) *)
+    Ry : REAL;(* RANGE(0 ..255) *)
+    Py : REAL;(* RANGE(0 ..255) *)
+    Wx : REAL;(* RANGE(0 ..255) *)
+    Tz : REAL;(* RANGE(0 ..255) *) 
+    Rx : REAL;(* RANGE(0 ..255) *)
+    
+END_VAR
+
+// Define output variable
+VAR_OUTPUT
+    letter : REAL;(* RANGE(0 ..300) *)
+END_VAR
+
+// Fuzzify input variable 'x'
+
+FUZZIFY Wx
+	TERM straight := (0,0) (20,1) (50,1) (80,0);
+	TERM side := (190,0) (220,1) (240,1) (255,1);
+	TERM bend := (80,0) (120,1) (190,1) (200,0);
+END_FUZZIFY
+
+
+FUZZIFY Tx
+	TERM stretch := (0,0) (5,1) (10,1) (13,0);
+	TERM halfBend := (10,0) (25,1) (60,1) (90,0);
+	TERM fullBend := (80,0) (120,1) (170,1) (255,1);
+END_FUZZIFY
+
+FUZZIFY Wy
+	TERM straight := (0,1) (5,1) (20,1) (30,0);
+	TERM bend := (25,0) (60,1) (200,1) (255,0);
+END_FUZZIFY
+
+FUZZIFY Tz
+	TERM stretch := (0,1) (20,1) (100,1) (120,0);
+	TERM fullBend := (110,0) (130,1) (190,1) (255,1);
+END_FUZZIFY
+
+FUZZIFY Ty
+    TERM stretch := (0, 1) (5, 1) (15, 1) (25,0);
+    TERM halfBend := (15,0) (30,1) (95,1) (105,0);
+    TERM fullBend := (92,0) (115,1) (150,1) (255,1);
+END_FUZZIFY
+
+FUZZIFY Iy
+    TERM stretch := (0, 1) (1, 1) (10, 1) (15,0);
+    TERM halfBend := (13,0) (20,1) (170,1) (180,0);																//Done
+    TERM fullBend := (170,0) (195,1) (220,1) (255,1);
+END_FUZZIFY
+
+FUZZIFY Rx
+	TERM close := (0,0) (30,1) (80,1) (90,0);
+	TERM open := (85,0) (140,1) (190,1) (255,0);
+END_FUZZIFY
+
+FUZZIFY My
+    TERM stretch := (0, 1) (10, 1) (18, 1) (25,0);
+    TERM halfBend := (23,0) (35,1) (170,1) (185,0);																//Done
+    TERM fullBend := (180,0) (195,1) (220,1) (255,1);
+END_FUZZIFY
+
+FUZZIFY Ry
+    TERM stretch := (0, 1) (1, 1) (10, 1) (15,0);
+    TERM halfBend := (13,0) (20,1) (140,1) (150,0);																//done
+    TERM fullBend := (150,0) (165,1) (220,1) (255,1);
+END_FUZZIFY
+
+FUZZIFY Py
+	TERM stretch := (0, 1) (1, 1) (30, 1) (40,0);																//Done
+    TERM halfBend := (35,0) (55,1) (75,1) (110,0);																//Verifing after test
+    TERM fullBend := (100,0) (120,1) (220,1) (255,1);
+END_FUZZIFY
+
+
+// Defuzzify output variable 'letter'
+DEFUZZIFY letter
+    TERM alif := (0,0) (5,1) (10,0);
+    TERM baaa := (10,0) (15,1) (20,0);
+    TERM taaa := (20,0) (25,1) (30,0);
+    TERM thaaa := (30,0) (35,1) (40,0);
+    TERM jeem := (40,0) (45,1) (50,0);
+    TERM haaaa := (50,0) (55,1) (60,0);
+    TERM khaaa := (60,0) (65,1) (70,0);
+    TERM daal := (70,0) (75,1) (80,0);
+    TERM thaal := (80,0) (85,1) (90,0);
+    TERM raaa := (90,0) (95,1) (100,0);
+    TERM zain := (100,0) (105,1) (110,0);
+    TERM seen := (110,0) (115,1) (120,0);
+    TERM sheen := (120,0) (125,1) (130,0);
+    TERM saad := (130,0) (135,1) (140,0);
+    TERM daad := (140,0) (145,1) (150,0);
+    TERM taah := (150,0) (155,1) (160,0);
+    TERM thaah := (160,0) (165,1) (170,0);
+    TERM ain := (170,0) (175,1) (180,0);
+    TERM ghain := (190,0) (195,1) (200,0);
+    TERM faaa := (200,0) (205,1) (210,0);
+    TERM qaaf := (210,0) (215,1) (220,0);
+    TERM kaaf := (220,0) (225,1) (230,0);
+    TERM laam := (230,0) (235,1) (240,0);
+    TERM meem := (240,0) (245,1) (250,0);
+    TERM noon := (250,0) (255,1) (260,0);
+    TERM haa := (260,0) (265,1) (270,0);
+    TERM wow := (270,0) (275,1) (280,0);
+    TERM yaaa := (280,0) (285,1) (290,0);
+    
+    // Use 'Center Of Gravity' defuzzification method
+    METHOD : COG;
+    // Default value is 0 (if no rule activates defuzzifier)
+    DEFAULT := 0;
+END_DEFUZZIFY
+
+RULEBLOCK No1
+    // Use 'min' for 'and' (also implicit use 'max'
+    // for 'or' to fulfill DeMorgan's Law)
+    AND : MIN;
+    // Use 'min' activation method
+    ACT : MIN;
+    // Use 'max' accumulation method
+    ACCU : MAX;
+
+    
+    RULE 1 : IF Wx IS side AND Ty IS stretch AND Iy IS halfBend AND My IS halfBend AND Ry IS halfBend //AND Py IS halfBend
+    			THEN letter IS alif; 
+    			
+    RULE 2 : IF Wy IS straight AND Ty IS halfBend AND Iy IS stretch AND My IS fullBend AND Ry IS fullBend  AND Tz is stretch //AND Py IS fullBend
+    			THEN letter IS baaa;
+    			
+   // RULE 3 : IF Wy IS straight AND Ty IS fullBend AND Iy IS stretch AND My IS stretch AND Ry IS fullBend AND Py IS fullBend
+    //			THEN letter IS taaa;
+    			
+    //RULE 4 : IF Wy IS straight AND Ty IS fullBend AND Iy IS stretch AND My IS stretch AND Ry IS stretch AND Py IS fullBend
+    	//		THEN letter IS thaaa;
+    			
+    //RULE 5 : IF Wy IS straight AND Ty IS fullBend AND Iy IS halfBend AND My IS halfBend AND Ry IS halfBend AND Py IS halfBend
+    		//	THEN letter IS jeem; 
+
+    //RULE 6 : IF Wy IS straight AND Ty IS fullBend AND Iy IS halfBend AND My IS halfBend AND Ry IS halfBend AND Py IS halfBend		
+    	//		THEN letter IS haaaa; 
+    			
+   // RULE 7 : IF Wy IS straight AND Ty IS stretch AND Iy IS halfBend AND My IS halfBend AND Ry IS halfBend AND Py IS halfBend
+   	//		THEN letter IS khaaa; 
+  			
+   // RULE 8 : IF Wy IS straight AND Ty IS halfBend AND Iy IS halfBend AND My IS fullBend AND Ry IS fullBend AND Py IS fullBend AND Tz IS stretch					//fixing with Tz axis
+    //			THEN letter IS daal;
+    			 
+   // RULE 9 : IF Wy IS straight AND Ty IS halfBend AND Iy IS halfBend AND My IS halfBend AND Ry IS fullBend AND Py IS fullBend AND Tz IS stretch
+    //			THEN letter IS thaal;
+
+    RULE 10 : IF Wy IS straight AND Ty IS fullBend AND Iy IS halfBend AND My IS fullBend AND Ry IS fullBend AND Py IS fullBend
+    			THEN letter IS raaa;
+
+    //RULE 11 : IF Wy IS straight AND Ty IS fullBend AND Iy IS halfBend AND My IS halfBend AND Ry IS fullBend AND Py IS fullBend
+    	//		THEN letter IS zain;
+    			
+    //RULE 12 : IF Wy IS straight AND Ty IS stretch AND Iy IS stretch AND My IS stretch AND Ry IS stretch AND Py IS stretch AND Rx IS close
+    		//	THEN letter IS seen;
+    			
+    //RULE 13 : IF Wy IS straight AND Ty IS stretch AND Iy IS stretch AND My IS stretch AND Ry IS stretch AND Py IS stretch AND Rx IS open
+    	//		THEN letter IS sheen;    		
+    			
+    //RULE 14 : IF Wy IS straight AND Ty IS halfBend AND Iy IS fullBend AND My IS fullBend AND Ry IS fullBend AND Py IS fullBend
+    	//		THEN letter IS saad;
+    			
+    //RULE 15 : IF Wy IS straight AND Ty IS stretch AND Iy IS fullBend AND My IS fullBend AND Ry IS fullBend AND Py IS fullBend
+    	//		THEN letter IS daad;
+    			
+    //RULE 16 : IF Wy IS straight AND Ty IS halfBend AND Iy IS stretch AND My IS halfBend AND Ry IS fullBend AND Py IS fullBend
+    	//		THEN letter IS taah;
+    			
+   //RULE 17 : IF Wy IS straight AND Ty IS stretch AND Iy IS fullBend AND My IS fullBend AND Ry IS fullBend AND Py IS fullBend
+    //			THEN letter IS thaah;
+    		
+   // RULE 18 : IF Wx IS side AND Ty IS fullBend AND Iy IS halfBend AND My IS halfBend AND Ry IS halfBend AND Py IS halfBend
+    //			THEN letter IS ain;
+    			
+    //RULE 19 : IF Wx IS side AND Ty IS halfBend AND Iy IS halfBend AND My IS halfBend AND Ry IS halfBend AND Py IS halfBend
+    	//		THEN letter IS ghain;   			
+    			
+    //RULE 20 : IF Wy IS straight AND Ty IS halfBend AND Iy IS halfBend AND My IS fullBend AND Ry IS fullBend AND Py IS fullBend AND Tz IS fullBend					  //confusion with daal	trying to fix with TZ axis
+    	//		THEN letter IS faaa;
+    			
+    //RULE 21 : IF (Wy IS straight AND Ty IS stretch AND Iy IS halfBend AND My IS halfBend AND Ry IS fullBend AND Py IS fullBend  AND Tz IS fullBend)                       //confusion with thaal trying to fix with TZ axis
+    	//		THEN letter IS qaaf;
+    			
+    RULE 22 : IF (Wy IS straight AND Ty IS fullBend AND Iy IS stretch AND My IS stretch AND Ry IS stretch AND Py IS stretch)
+    			THEN letter IS kaaf;  			
+    			
+    //RULE 23 : IF (Wy IS straight AND Ty IS halfBend AND Iy IS stretch AND My IS fullBend AND Ry IS fullBend AND Py IS fullBend AND Tz is fullBend)
+    	//		THEN letter IS laam;
+    			
+    RULE 24 : IF (Wy IS straight AND Ty IS halfBend AND Iy IS fullBend AND My IS fullBend AND Ry IS fullBend)
+    			THEN letter IS meem;	
+    			
+    RULE 25 : IF (Wx IS bend AND Ty IS stretch AND Iy IS stretch AND My IS halfBend AND Ry IS halfBend) //AND Py IS halfBend)
+    			THEN letter IS noon;	
+    			
+   // RULE 26 : IF (Wy IS straight AND Ty IS fullBend AND Iy IS halfBend AND My IS halfBend AND Ry IS halfBend AND Py IS fullBend)								//verify upon testing
+    //			THEN letter IS haa;		
+    			
+    //RULE 27 : IF (Wx IS bend AND Ty IS fullBend AND Iy IS fullBend AND My IS halfBend AND Ry IS halfBend AND Py IS halfBend)										//Verify Upon testing	
+    	//		THEN letter IS wow;    			
+    			
+    RULE 28 : IF (Wy IS straight AND Ty IS stretch AND Iy IS fullBend AND My IS fullBend AND Ry IS fullBend)
+    			THEN letter IS yaaa;    			
+    			
+   			
+ 			   
+END_RULEBLOCK
+
+END_FUNCTION_BLOCK
